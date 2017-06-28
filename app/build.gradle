@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'//配置greendao
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    }
+}
+
+//配置greendao
+greendao {
+    schemaVersion 1    //表示的数据库schema的版本号：在升级数据库或者数据迁移的时候需要改变这个值，只要每次都+1就行；
+    daoPackage 'com.xw.greendaodemo.dao'     // dao的包名，包名默认是entity所在的包；
+    targetGenDir 'src/main/java'        //自动生成的数据库文件的目录。
+}
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.xw.greendaodemo"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+//    compile 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    compile 'org.greenrobot:greendao-generator:3.2.2'
+    compile 'org.greenrobot:greendao:3.2.2'
+}
